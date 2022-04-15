@@ -21,8 +21,11 @@ const experts = [
 
 const Experts = () => {
     return (
-        <div style={{ width: '92%', margin: 'auto' }} className='row'>
-            <h2 className='text-primary text-center'>this is expert {experts.length} </h2>
+        <div style={{ margin: 'auto', width: '92%' }} className='row'>
+
+            <h2 className='text-primary text-center'>this experts {experts.length} </h2>
+            <br /> <br />
+
             {
                 experts.map(expert => <Expert key={expert.id} expert={expert}></Expert>)
             }

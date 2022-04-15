@@ -13,7 +13,10 @@ const Services = () => {
 
     return (
         <div>
-            <h2 className='services-title'>Services</h2>
+            <br /><br />
+            <h2 id='service' className='services-title'>Services</h2>
+            <br /> <br />
+
 
             <div className="main-services">
                 {
@@ -21,7 +24,7 @@ const Services = () => {
                 }
             </div>
 
-
+            <br />
         </div>
     );
 };

@@ -3,8 +3,8 @@ import React from 'react';
 const Expert = ({ expert }) => {
     const { img, name } = expert
     return (
-        <div className="col-lg-4 col-md-6 col-sm-12  g-4">
-            <div className='card' style={{ width: '18rem' }}>
+        <div id='expert' className="col-lg-4 col-md-6 col-sm-12  g-4">
+            <div className='card' style={{ width: '100%' }}>
                 <img src={img} className="card-img-top" alt="..." />
                 <div className="card-body">
                     <h5 className="card-title">{name}</h5>
