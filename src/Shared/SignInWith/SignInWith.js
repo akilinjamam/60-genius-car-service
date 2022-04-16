@@ -4,7 +4,7 @@ import logo2 from '../../image-logo/GitHub-Mark.png'
 import logo3 from '../../image-logo/facebook.png'
 import { useSignInWithGithub, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const SignInWith = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
@@ -13,10 +13,12 @@ const SignInWith = () => {
     let theLoading;
 
     const navigate = useNavigate();
+    const location = useLocation();
 
+    let from = location?.state?.from?.pathname || "/";
 
     if (user || user1) {
-        navigate('/')
+        navigate(from, { replace: true });
     }
 
     if (error || error1) {

@@ -16,7 +16,7 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    let from = location.state?.from?.pathname || "/";
+    let from = location?.state?.from?.pathname || "/";
 
     const [
         signInWithEmailAndPassword,
@@ -36,7 +36,7 @@ const Login = () => {
     //     alert('sent email')
 
     // }
-    if (error) {
+    if (error || sending) {
 
         errorElement = <div>
             <p> Error: {error?.message}   </p>
