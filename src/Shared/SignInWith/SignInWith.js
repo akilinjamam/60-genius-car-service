@@ -16,7 +16,7 @@ const SignInWith = () => {
 
 
     if (user || user1) {
-        navigate('/home')
+        navigate('/')
     }
 
     if (error || error1) {
