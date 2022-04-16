@@ -1,40 +1,56 @@
 
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
+
+import SignInWith from '../../Shared/SignInWith/SignInWith';
+import { useState } from 'react';
+import Loading from '../Loading/Loading';
+
 
 const Register = () => {
 
+    const [agree, setAgree] = useState(false)
+
     const [
         createUserWithEmailAndPassword,
-        user,
-        loading,
-        error,
-    ] = useCreateUserWithEmailAndPassword(auth);
+        user
 
+    ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
+
+    const [updateProfile, updating, error] = useUpdateProfile(auth);
 
     const navigate = useNavigate()
 
-    const handleRegister = (event) => {
+    if (updating) {
+        return <Loading></Loading>
+    }
+
+    const handleRegister = async (event) => {
         event.preventDefault();
 
         const name = event.target.name.value
         const email = event.target.email.value
         const password = event.target.password.value
-        // console.log(name, email, password)
+        // const agree = event.target.terms.checked
 
-        createUserWithEmailAndPassword(email, password)
 
+        await createUserWithEmailAndPassword(email, password);
+        await updateProfile({ displayName: name });
+        console.log('Updated profile');
+        navigate('/home')
     }
 
     if (user) {
-        navigate('/home')
+        console.log('user', user)
     }
 
     const handleNavigate = event => {
         navigate('/login')
     }
+
+
     return (
         <div style={{ border: '1px solid lightgray', borderRadius: '10px' }} className='mx-auto w-25 p-4'>
             <h2 className='text-center text-primary'>Please Register</h2>
@@ -62,11 +78,16 @@ const Register = () => {
                 </Form.Group>
 
                 <p>Already Account in Genius Car? <span style={{ cursor: 'pointer' }} className='text-danger' onClick={handleNavigate}  > Login </span> </p>
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group>
 
-                <Button className='d-block mx-auto' variant="primary" type="submit">
+                <SignInWith></SignInWith>
+                <div className='mx-auto'>
+                    <input onClick={() => setAgree(!agree)} type="checkbox" name="terms" id="terms" />
+                    {/* <label className={agree ? 'text-primary' : 'text-danger'} style={{ fontSize: '12px', marginLeft: '10px' }} htmlFor="terms">Accepts Genius Cars Terms and Conditions</label> */}
+                    <label className={`ps-2 ${agree ? 'text-primary' : 'text-danger'}`} style={{ fontSize: '12px' }} htmlFor="terms">Accepts Genius Cars Terms and Conditions</label>
+                </div>
+
+
+                <Button disabled={!agree} className='d-block mx-auto' variant="primary" type="submit">
                     Submit
                 </Button>
 

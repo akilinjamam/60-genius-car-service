@@ -1,8 +1,13 @@
 import React, { useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
+
+import SignInWith from '../../Shared/SignInWith/SignInWith';
+import Loading from '../Loading/Loading';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
 
@@ -19,6 +24,35 @@ const Login = () => {
         loading,
         error,
     ] = useSignInWithEmailAndPassword(auth);
+    let errorElement;
+
+
+    const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(
+        auth)
+
+    // const handleForgetPassword = async () => {
+    //     const email = emailRef.current.value
+    //     await sendPasswordResetEmail(email)
+    //     alert('sent email')
+
+    // }
+    if (error) {
+
+        errorElement = <div>
+            <p> Error: {error?.message}   </p>
+        </div>
+
+    }
+
+    if (loading) {
+
+        return <Loading></Loading>
+
+        // theLoading = <div>
+        //     <p>Loading...</p>
+        // </div>
+
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -53,7 +87,30 @@ const Login = () => {
                     <Form.Label>Password</Form.Label>
                     <Form.Control ref={passwordRef} type="password" placeholder="Password" required />
                 </Form.Group>
-                <p>New to Genius Car? <span style={{ cursor: 'pointer' }} className='text-danger' onClick={handleNavigate}  > Register </span> </p>
+                <p>New to Genius Car? <span style={{ cursor: 'pointer', fontSize: '13px' }} className='text-danger' onClick={handleNavigate}  > Register </span> </p>
+
+
+                <p> forget your password? <span style={{ cursor: 'pointer', fontSize: '13px' }} className='text-danger' onClick={async () => {
+                    const email = emailRef.current.value
+
+                    if (email) {
+                        await sendPasswordResetEmail(email);
+                        toast('Sent email to your Gmail Account. please check it');
+                    } else {
+                        toast('please enter your email address')
+                    }
+                }}   > create new password </span> </p>
+
+
+
+                <div>
+                    <p style={{ fontSize: '12px', textAlign: 'center', color: 'red' }} > {errorElement} </p>
+                    {/* <p> {theLoading} </p> */}
+                </div>
+                <SignInWith></SignInWith>
+                <ToastContainer />
+
+
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="Check me out" />
                 </Form.Group>
@@ -64,8 +121,8 @@ const Login = () => {
 
 
 
-            </Form>
-        </div>
+            </Form >
+        </div >
     );
 };
 
