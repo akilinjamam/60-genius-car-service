@@ -52,7 +52,15 @@ const Order = () => {
 
     return (
         <div>
-            <h2> this is order {order.length} </h2>
+            <h2 style={{ color: 'green' }} className='text-center'>  Order: {order.length} </h2>
+
+            <div className='text-center text-primary border border-black w-50 mx-auto rounded p-4'>
+                {
+                    order.map(theOrder => <div key={theOrder._id}>
+                        <p> {theOrder.email} : {theOrder.service}  </p>
+                    </div>)
+                }
+            </div>
         </div>
     );
 };
