@@ -9,6 +9,7 @@ import Loading from '../Loading/Loading';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import useToken from '../useToken';
 
 const Login = () => {
 
@@ -30,6 +31,8 @@ const Login = () => {
 
     const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(
         auth)
+
+    const [token] = useToken(user)
 
     // const handleForgetPassword = async () => {
     //     const email = emailRef.current.value
@@ -62,16 +65,14 @@ const Login = () => {
         const password = passwordRef.current.value;
         console.log(email, password);
 
-        signInWithEmailAndPassword(email, password)
-        const { data } = await axios.post('https://fierce-plains-73609.herokuapp.com/login', { email })
-        console.log(data)
-        localStorage.setItem('accessToken', data.accesToken);
-        navigate(from, { replace: true });
+        await signInWithEmailAndPassword(email, password)
+
+        // navigate(from, { replace: true });
 
     }
 
-    if (user) {
-        // navigate(from, { replace: true });
+    if (token) {
+        navigate(from, { replace: true });
     }
 
     const handleNavigate = event => {

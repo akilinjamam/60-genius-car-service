@@ -30,7 +30,7 @@ const Order = () => {
         const getOrder = async () => {
             try {
 
-                const email = user.email
+                const email = user?.email
                 const url = `https://fierce-plains-73609.herokuapp.com/order?email=${email}`;
                 const { data } = await axiosPrivate.get(url);
                 setOrder(data)

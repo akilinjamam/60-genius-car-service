@@ -7,11 +7,13 @@ import auth from '../../firebase.init';
 import SignInWith from '../../Shared/SignInWith/SignInWith';
 import { useState } from 'react';
 import Loading from '../Loading/Loading';
+import useToken from '../useToken';
 
 
 const Register = () => {
 
     const [agree, setAgree] = useState(false)
+
 
     const [
         createUserWithEmailAndPassword,
@@ -20,6 +22,7 @@ const Register = () => {
     ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
 
     const [updateProfile, updating, error] = useUpdateProfile(auth);
+    const [token] = useToken(user)
 
     const navigate = useNavigate()
 
@@ -42,8 +45,9 @@ const Register = () => {
         navigate('/home')
     }
 
-    if (user) {
+    if (token) {
         console.log('user', user)
+        navigate('/home')
     }
 
     const handleNavigate = event => {
