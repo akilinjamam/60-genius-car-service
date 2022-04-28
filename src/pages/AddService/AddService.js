@@ -5,7 +5,7 @@ const AddService = () => {
     const { register, handleSubmit } = useForm();
     const onSubmit = data => {
 
-        const url = 'http://localhost:5000/service';
+        const url = 'https://fierce-plains-73609.herokuapp.com/service';
         fetch(url, {
             method: 'POST',
             headers: {

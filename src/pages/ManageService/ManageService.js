@@ -8,7 +8,7 @@ const ManageService = () => {
 
         const proceed = window.confirm('ARE YOU SURE YOU WANT TO DELETE THE ITEM')
         if (proceed) {
-            const url = `http://localhost:5000/service/${id}`
+            const url = `https://fierce-plains-73609.herokuapp.com/service/${id}`
             fetch(url, {
                 method: 'DELETE'
             })

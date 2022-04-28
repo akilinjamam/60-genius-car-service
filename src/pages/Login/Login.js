@@ -8,6 +8,7 @@ import SignInWith from '../../Shared/SignInWith/SignInWith';
 import Loading from '../Loading/Loading';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 const Login = () => {
 
@@ -55,18 +56,22 @@ const Login = () => {
     }
 
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const email = emailRef.current.value
         const password = passwordRef.current.value;
         console.log(email, password);
 
         signInWithEmailAndPassword(email, password)
+        const { data } = await axios.post('https://fierce-plains-73609.herokuapp.com/login', { email })
+        console.log(data)
+        localStorage.setItem('accessToken', data.accesToken);
+        navigate(from, { replace: true });
 
     }
 
     if (user) {
-        navigate(from, { replace: true });
+        // navigate(from, { replace: true });
     }
 
     const handleNavigate = event => {

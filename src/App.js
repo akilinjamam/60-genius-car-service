@@ -16,6 +16,7 @@ import PageTitle from './pages/PageTitle/PageTitle';
 import Map from './pages/Map/Map';
 import AddService from './pages/AddService/AddService';
 import ManageService from './pages/ManageService/ManageService';
+import Order from './pages/Order/Order';
 
 
 function App() {
@@ -39,7 +40,7 @@ function App() {
         <Route path='/service/:serviceId' element={<ServiceDetail></ServiceDetail>}></Route>
         <Route path='/map' element={<Map></Map>}></Route>
         <Route path='/register' element={<Register></Register>}></Route>
-        <Route path='/checkout' element={<RequireAuth>
+        <Route path='/checkout/:serviceId' element={<RequireAuth>
           <CheckOut></CheckOut>
         </RequireAuth>} ></Route>
 
@@ -49,6 +50,10 @@ function App() {
 
         <Route path='/manageservice' element={<RequireAuth>
           <ManageService></ManageService>
+        </RequireAuth>} ></Route>
+
+        <Route path='/orders' element={<RequireAuth>
+          <Order></Order>
         </RequireAuth>} ></Route>
 
         <Route path='*' element={<NotFound></NotFound>}></Route>

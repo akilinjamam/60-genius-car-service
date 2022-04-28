@@ -42,6 +42,7 @@ const Header = () => {
 
                                     <Nav.Link as={Link} to="/addservice">Add Service</Nav.Link>
                                     <Nav.Link as={Link} to="/manageservice">Manage Service</Nav.Link>
+                                    <Nav.Link as={Link} to="/orders">Orders</Nav.Link>
 
                                 </>
 
@@ -57,6 +58,10 @@ const Header = () => {
                                     <Nav.Link as={Link} to="/login">
                                         Login
                                     </Nav.Link>
+                            }
+
+                            {
+                                user && <p className='text-white ms-4 mt-2'> {user.displayName}  </p>
                             }
                         </Nav>
                     </Navbar.Collapse>
